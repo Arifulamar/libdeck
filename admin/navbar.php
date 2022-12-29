@@ -1,3 +1,13 @@
+<?php 
+include ('notifikasi.php');
+include ('footerscript.php');
+include ('../conf/config.php');
+$datavisitor = mysqli_query ($koneksi, "SELECT * FROM kunjungan WHERE tanggal = CURRENT_DATE()");
+$jumlahdatavisitor = mysqli_num_rows ($datavisitor);
+
+
+
+  ?>
    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -31,11 +41,13 @@
         </div>
       </li>
 
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" id="notification">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-         <!-- <span class="badge badge-warning navbar-badge">15</span> -->
-        </a>
+          <i class="far fa-bell" id="over" data-value="<?php echo $count_active; ?>"></i>
+          <?php if (!empty($count_active)){ ?>
+         <span class="badge badge-warning navbar-badge"><?php echo $count_active; ?></span>
+         <?php } ?>
+          </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">15 Notifications</span>
           <div class="dropdown-divider"></div>
@@ -69,4 +81,24 @@
       </li>
     </ul>
   </nav>
-  
+
+  <script>
+    function myFunction() {
+  document.getElementById("over").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+  </script>
